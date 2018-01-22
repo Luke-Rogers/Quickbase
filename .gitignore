@@ -1,0 +1,7 @@
+.idea/*
+**/target/*
+*.iml
+pom.xml.versionsBackup
+.svn/*
+**/.mvm/*
+**/node_modules/*

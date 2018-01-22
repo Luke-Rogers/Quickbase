@@ -1,0 +1,33 @@
+<form [formGroup]="settings" novalidate>
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Action" aria-label="Number" matInput formControlName="action" [matAutocomplete]="actionAuto" >
+    <mat-autocomplete #actionAuto="matAutocomplete" [displayWith]="showLabel">
+      <mat-option *ngFor="let option of filteredActions | async" [value]="option">
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Table" aria-label="Number" matInput formControlName="table" [matAutocomplete]="tableAuto" >
+    <mat-autocomplete #tableAuto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredTable | async" [value]="option" >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput type="text" placeholder="Context" aria-label="Number"  formControlName="context">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput type="text" placeholder="Author" aria-label="Number"  formControlName="author">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="!settings.valid">Generate</button>
+</form>
+
+<p>{{settings.value | json}}</p>
+
+<app-action-table [definition]="definition"></app-action-table>

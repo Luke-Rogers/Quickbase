@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="201801191947" author="luke.rogers" context="base">
+        <createTable tableName="QUICKBASE">
+            <column name="TABLE_NAME" type="NVARCHAR(100)"/>
+            <column name="COLUMN_NAME" type="NVARCHAR(100)"/>
+            <column name="COLUMN_TYPE" type="NVARCHAR(25)"/>
+            <column name="DESCRIPTION" type="NVARCHAR(1000)"/>
+            <column name="NULLABLE" type="BOOLEAN"/>
+            <column name="CHARACTER_LENGTH" type="NUMBER(25)"/>
+            <column name="NUMERIC_PRECISION" type="NUMBER(25)"/>
+            <column name="NUMERIC_SCALE" type="NUMBER(25)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="201801211820" author="luke.rogers" context="base">
+        <insert tableName="QUICKBASE">
+            <column name="TABLE_NAME" value="TEST_TABLE_1"/>
+            <column name="COLUMN_NAME" value="TEST_COLUMN"/>
+            <column name="COLUMN_TYPE" value="NVARCHAR"/>
+            <column name="DESCRIPTION" value="Testing Column"/>
+            <column name="NULLABLE" valueBoolean="true"/>
+            <column name="CHARACTER_LENGTH" valueNumeric="25"/>
+        </insert>
+        <insert tableName="QUICKBASE">
+            <column name="TABLE_NAME" value="TEST_TABLE_2"/>
+            <column name="COLUMN_NAME" value="TEST_COLUMN"/>
+            <column name="COLUMN_TYPE" value="NVARCHAR"/>
+            <column name="DESCRIPTION" value="Testing Column"/>
+            <column name="NULLABLE" valueBoolean="true"/>
+            <column name="CHARACTER_LENGTH" valueNumeric="25"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
