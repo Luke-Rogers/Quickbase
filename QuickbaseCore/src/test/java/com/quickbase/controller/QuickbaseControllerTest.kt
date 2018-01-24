@@ -46,39 +46,56 @@ class QuickbaseControllerTest {
     @Test
     @Throws(Exception::class)
     fun should_generate_drop_table_change() {
-        val dropTable = DropTable(ChangeType.DROP_TABLE, null, "TEST_TABLE")
-        mockMvc.perform(MockMvcRequestBuilders.post("/quickbase/generate")
-                .accept(MediaType.APPLICATION_XML)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJson(ChangeLogRequest(dropTable, "author", listOf("test_context"), "changeSetId"))))
-                .andExpect(status().isOk)
-                .andExpect(content().xml(xmlFileAsString("drop-table-change-log.xml")))
+        val changeRequest = ChangeRequest(listOf(ChangeLogRequest(getDropTableChange(), "author", listOf("test_context"), "changeSetId")))
+        performRequest(changeRequest, "drop-table-change-log.xml")
     }
 
     @Test
     @Throws(Exception::class)
     fun should_generate_insert_change() {
-        val columns = listOf(ChangeColumn("TEST_COLUMN", "NVARCHAR", "TEST"))
-        val insert = Insert(ChangeType.INSERT, null, "TEST_TABLE", columns)
-        mockMvc.perform(MockMvcRequestBuilders.post("/quickbase/generate")
-                .accept(MediaType.APPLICATION_XML)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJson(ChangeLogRequest(insert, "author", listOf("test_context"), "changeSetId"))))
-                .andExpect(status().isOk)
-                .andExpect(content().xml(xmlFileAsString("insert-change-log.xml")))
+
+        val changeRequest = ChangeRequest(listOf(ChangeLogRequest(getInsertChange(), "author", listOf("test_context"), "changeSetId")))
+        performRequest(changeRequest, "insert-change-log.xml")
     }
 
     @Test
     @Throws(Exception::class)
     fun should_generate_update_change() {
+        val changeRequest = ChangeRequest(listOf(ChangeLogRequest(getUpdateChange(), "author", listOf("test_context"), "changeSetId")))
+        performRequest(changeRequest, "update-change-log.xml")
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun should_generate_mixture_of_changes() {
+        val updateChangeLog = ChangeLogRequest(getUpdateChange(), "author", listOf("test_context"), "changeSetId")
+        val dropTableChangeLog = ChangeLogRequest(getDropTableChange(), "author", listOf("test_context"), "changeSetId")
+        val insertChangeLog = ChangeLogRequest(getInsertChange(), "author", listOf("test_context"), "changeSetId")
+        val changeRequest = ChangeRequest(listOf(updateChangeLog, dropTableChangeLog, insertChangeLog))
+        performRequest(changeRequest, "mixture-change-log.xml")
+    }
+
+    private fun getDropTableChange() : DropTable {
+        return DropTable(ChangeType.DROP_TABLE, null, "TEST_TABLE")
+    }
+
+    private fun getInsertChange() : Insert {
         val columns = listOf(ChangeColumn("TEST_COLUMN", "NVARCHAR", "TEST"))
-        val update = Update(ChangeType.UPDATE, null, "TEST_TABLE", columns, "TEST_COLUMN = 'ABC'")
+        return Insert(ChangeType.INSERT, null, "TEST_TABLE", columns)
+    }
+
+    private fun getUpdateChange() : Update {
+        val columns = listOf(ChangeColumn("TEST_COLUMN", "NVARCHAR", "TEST"))
+        return Update(ChangeType.UPDATE, null, "TEST_TABLE", columns, "TEST_COLUMN = 'ABC'")
+    }
+
+    private fun performRequest(changeRequest: ChangeRequest, fileName: String) {
         mockMvc.perform(MockMvcRequestBuilders.post("/quickbase/generate")
                 .accept(MediaType.APPLICATION_XML)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJson(ChangeLogRequest(update, "author", listOf("test_context"), "changeSetId"))))
+                .content(asJson(changeRequest)))
                 .andExpect(status().isOk)
-                .andExpect(content().xml(xmlFileAsString("update-change-log.xml")))
+                .andExpect(content().xml(xmlFileAsString(fileName)))
     }
 
     @Throws(IOException::class)

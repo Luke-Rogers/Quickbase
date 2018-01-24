@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="author" context="test_context" id="changeSetId">
+        <update tableName="TEST_TABLE">
+            <column name="TEST_COLUMN" value="TEST"/>
+            <where>TEST_COLUMN = 'ABC'</where>
+        </update>
+    </changeSet>
+    <changeSet author="author" context="test_context" id="changeSetId">
+        <dropTable tableName="TEST_TABLE"/>
+    </changeSet>
+    <changeSet author="author" context="test_context" id="changeSetId">
+        <insert tableName="TEST_TABLE">
+            <column name="TEST_COLUMN" value="TEST"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

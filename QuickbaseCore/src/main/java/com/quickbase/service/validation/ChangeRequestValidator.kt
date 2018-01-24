@@ -1,15 +1,15 @@
 package com.quickbase.service.validation
 
-import com.quickbase.api.change.ChangeLogRequest
+import com.quickbase.api.change.ChangeRequest
 import org.springframework.stereotype.Service
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 
 @Service
-class ChangeLogRequestValidator : Validator {
+class ChangeRequestValidator : Validator {
 
     override fun supports(aClass: Class<*>): Boolean {
-        return ChangeLogRequest::class.java == aClass
+        return ChangeRequest::class.java == aClass
     }
 
     override fun validate(o: Any, errors: Errors) {
