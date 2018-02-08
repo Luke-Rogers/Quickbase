@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
+  <v-app id="inspire">
+  <div id="app" >
     <router-view/>
   </div>
+  </v-app>
 </template>
 
 <script>
@@ -21,7 +22,3 @@ export default {
   margin-top: 60px;
 }
 </style>
-
-<head>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-</head>

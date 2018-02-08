@@ -1,113 +1,59 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div>
+    <change-set></change-set>
+    <draggable v-model="scriptComponents" :options="{group:'people'}" @start="drag=true" @end="drag=false">
+      <div  class="changeSet" v-for="(scriptComponent,index) in scriptComponents" :key="scriptComponent">
+        <h1> change set {{index}}</h1>
+        <draggable v-model="scriptComponent.actions" :options="{group:'other'}" @start="drag=true" @end="drag=false">
+          <div v-for="action in scriptComponent.actions" :key="action">{{action}}
+            <div>
+              <v-btn color="primary">Primary</v-btn>
+            </div>
+
+          </div>
+
+        </draggable>
+
+      </div>
+    </draggable>
+
   </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import draggable from 'vuedraggable';
+  import ChangeSet from "./changeSet.vue";
+
+  export default {
+    components: {
+      ChangeSet,
+      draggable
+    },
+    name: 'HelloWorld',
+    data() {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+        scriptComponents: [{actions: [{test: "test1"}, {test: "test2"}]},
+          {actions: [{test: "test3"}, {test: "test4"}]}],
+        exampleList: [
+          'Item 1',
+          'Item 2',
+          'Item 3',
+          'Item 4',
+          'Item 5'
+        ]
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.changeSet{
+  width:50%;
+  background-color: white;
+  margin-top: 2rem;
+  min-height: 200px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
