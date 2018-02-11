@@ -1,11 +1,12 @@
 <template>
-  <div class="changeSet">
+
+  <v-card class="changeSet">
     <h1> change set</h1>
     <draggable v-model="actions" :options="{group:'other'}" @start="drag=true" @end="drag=false">
       <table-action v-for="action in actions" v-bind:action="action" ></table-action>
     </draggable>
     debug:{{actions}}
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -27,7 +28,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  draggable {
-    background-color: red;
-  }
+.changeSet{
+  width:100%;
+  margin-top:10px;
+}
 </style>

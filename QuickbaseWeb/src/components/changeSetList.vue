@@ -1,9 +1,17 @@
 <template>
   <div>
-    <draggable v-model="scriptComponents" :options="{group:'people'}" @start="drag=true" @end="drag=false">
-      <change-set v-for="(scriptComponent,index) in scriptComponents"  v-bind:actions="scriptComponent.actions">
-      </change-set>
-    </draggable>
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex xs4 offset-xs4 text-xs-center>
+
+            <draggable v-model="scriptComponents" :options="{group:'people'}" @start="drag=true" @end="drag=false">
+              <change-set v-for="(scriptComponent,index) in scriptComponents"  v-bind:actions="scriptComponent.actions">
+              </change-set>
+            </draggable>
+        </v-flex>
+      </v-layout>
+    </v-container>
+
   debug:{{scriptComponents}}
   </div>
 </template>
