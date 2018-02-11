@@ -1,5 +1,4 @@
 <template>
-
   <v-card class="changeSet">
     <h2> change set {{changeSet.id}}</h2>
     <v-icon class="changeSet--delete"  v-on:click="removeChangeSet()">delete</v-icon>
@@ -14,38 +13,38 @@
 </template>
 
 <script>
-  import draggable from 'vuedraggable';
-  import TableAction from "./tableAction.vue";
-  import changeSetStore from '../stores/changeSetData';
+import draggable from 'vuedraggable'
+import TableAction from './tableAction.vue'
+import changeSetStore from '../stores/changeSetData'
 
-  export default {
-    components: {
-      TableAction,
-      draggable
+export default {
+  components: {
+    TableAction,
+    draggable
+  },
+  name: 'changeSet',
+  props: ['changeSet'],
+  data () {
+    return {}
+  },
+  methods: {
+    persistChanges: function (e) {
+      changeSetStore.updateAction(this.changeSet)
     },
-    name: 'changeSet',
-    props: ['changeSet'],
-    data() {
-      return {}
-    }
-    , methods: {
-      persistChanges: function (e) {
-        changeSetStore.updateAction(this.changeSet)
-      },
-      removeChangeSet:function() {
-        changeSetStore.removeChangeSet(this.changeSet)
-      },
-      addAction: function () {
-        this.changeSet.actions.push({test:"new action"})
-      },
-      removeAction: function(action) {
-        let index = this.changeSet.actions.indexOf(action);
-        if(index !== -1) {
-          this.changeSet.actions.splice(index,1);
-        }
+    removeChangeSet: function () {
+      changeSetStore.removeChangeSet(this.changeSet)
+    },
+    addAction: function () {
+      this.changeSet.actions.push({test: 'new action'})
+    },
+    removeAction: function (action) {
+      let index = this.changeSet.actions.indexOf(action)
+      if (index !== -1) {
+        this.changeSet.actions.splice(index, 1)
       }
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
